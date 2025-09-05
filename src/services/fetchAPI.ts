@@ -1,40 +1,47 @@
-// services/fetchApis.ts
+const BASE_URL = "/api/todo";
 
-const BASE_URL = "/api/todo"; // base path for your todo API
-
-export const getAPI = async (endpoint = "") => {
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-  if (!res.ok) throw new Error("Failed to fetch");
+// Get all tasks
+export const getAPI = async () => {
+  const res = await fetch(BASE_URL);
+  if (!res.ok) throw new Error("Görevler alınamadı");
   return res.json();
 };
 
-export const postAPI = async (data: any) => {
+// Get a single task by ID
+export const getByIdAPI = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/${id}`);
+  if (!res.ok) throw new Error("Görev bulunamadı");
+  return res.json();
+};
+
+// Create new task
+export const postAPI = async (data: { title: string; description: string }) => {
   const res = await fetch(BASE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Failed to post");
+  if (!res.ok) throw new Error("Görev eklenemedi");
   return res.json();
 };
 
-export const putAPI = async (id: string, data: any) => {
+// Update a task
+export const putAPI = async (
+  id: string,
+  data: { title?: string; description?: string; status?: string }
+) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Failed to update");
+  if (!res.ok) throw new Error("Görev güncellenemedi");
   return res.json();
 };
 
+// Delete a task
 export const deleteAPI = async (id: string) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
-    method: "DELETE",
-  });
-  if (!res.ok) throw new Error("Failed to delete");
+  const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
+  if (!res.ok) throw new Error("Görev silinemedi");
   return res.json();
 };
