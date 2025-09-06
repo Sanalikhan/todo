@@ -13,7 +13,11 @@ const statusMap: Record<"pending" | "completed", string> = {
 export const TasksList: React.FC = () => {
   const { tasks, setTasks, updateTask } = useTaskStore();
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
-  const [formData, setFormData] = useState<{ title: string; description: string; status: Task["status"] }>({
+  const [formData, setFormData] = useState<{ 
+    title: string; 
+    description: string; 
+    status: Task["status"]
+   }>({
     title: "",
     description: "",
     status: "pending",
@@ -25,7 +29,7 @@ export const TasksList: React.FC = () => {
   }, [setTasks]);
 
   // Handle drag & drop
-  const onDragEnd = async (result: DropResult) => {
+  const onDragEnd = async (result: DropResult): Promise<void> => {
     if (!result.destination) return;
 
     const task = tasks[result.source.index];
@@ -45,7 +49,7 @@ export const TasksList: React.FC = () => {
   };
 
   // Handle Edit
-  const handleEditClick = (task: Task) => {
+  const handleEditClick = (task: Task): void => {
     setEditingTaskId(task.id);
     setFormData({
       title: task.title,
@@ -68,7 +72,7 @@ export const TasksList: React.FC = () => {
   const pendingTasks = tasks.filter((t) => t.status === "pending");
   const completedTasks = tasks.filter((t) => t.status === "completed");
 
-  const renderTask = (task: Task, index: number) => (
+  const renderTask = (task: Task, index: number): React.ReactNode => (
     <Draggable key={task.id} draggableId={task.id} index={index}>
       {(provided) => (
         <div

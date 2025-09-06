@@ -28,11 +28,16 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ show, onClose }) => {
       // Reset form
       setTitle("");
       setDescription("");
-      onClose();
-    } catch (err: any) {
+      onClose()
+    } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      alert("Görev eklenemedi: " + err.message);
+    } else {
       console.error(err);
       alert("Görev eklenemedi!");
     }
+  }
   };
 
   return (
