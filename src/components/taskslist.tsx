@@ -4,10 +4,20 @@ import { useTaskStore, Task } from "../store/index";
 import { getAPI, putAPI, deleteAPI } from "../services/fetchAPI";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 
+// Map internal English status to Turkish display
+const statusMap: Record<"pending" | "completed", string> = {
+  pending: "Açık",
+  completed: "Tamamlandı",
+};
+
 export const TasksList: React.FC = () => {
   const { tasks, setTasks, updateTask } = useTaskStore();
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ title: "", description: "", status: "pending" });
+  const [formData, setFormData] = useState<{ title: string; description: string; status: Task["status"] }>({
+    title: "",
+    description: "",
+    status: "pending",
+  });
 
   // Fetch tasks from backend
   useEffect(() => {
@@ -82,11 +92,11 @@ export const TasksList: React.FC = () => {
               />
               <select
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, status: e.target.value as Task["status"] })}
                 className="border border-purple-700 p-2 rounded-3xl w-full pl-4"
               >
-                <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
+                <option value="pending">Açık</option>
+                <option value="completed">Tamamlandı</option>
               </select>
               <div className="flex justify-end gap-2 mt-4">
                 <button
@@ -104,24 +114,24 @@ export const TasksList: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-start slide-up">
               <div>
                 <h4 className="font-semibold">{task.title}</h4>
                 <p className="text-gray-600">{task.description}</p>
-                <span className="text-xs text-gray-500">{task.status}</span>
+                <span className="text-xs text-gray-500">{statusMap[task.status]}</span>
               </div>
               <div className="flex gap-1 sm:gap-2">
                 <button
                   onClick={() => handleEditClick(task)}
                   className="text-purple-800 hover:text-white bg-white p-2 hover:bg-purple-800 hover:rounded-full"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
                 </button>
                 <button
                   onClick={() => handleDelete(task.id)}
-                  className="text-red-700 hover:text-white bg-white p-2 hover:bg-red-700 hover:rounded-full"
+                  className="text-red-700 hover:text-white bg-white rounded-full p-2 hover:bg-red-700 hover:rounded-full transition delay-100 duration-100 ease-in-out hover:translate-y-1 hover:font-bold hover:cursor-pointer hover:shadow-md"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 </button>
               </div>
             </div>
@@ -142,7 +152,7 @@ export const TasksList: React.FC = () => {
               ref={provided.innerRef}
               className="flex-1 bg-green-300 py-4 px-1 sm:p-4 rounded-3xl min-h-[400px]"
             >
-              <h3 className="font-bold mb-4 pl-2">Bekleyen Görevler</h3>
+              <h3 className="font-bold mb-4 pl-2">{statusMap["pending"]} Görevler</h3>
               {pendingTasks.map((task, index) => renderTask(task, index))}
               {provided.placeholder}
             </div>
@@ -157,7 +167,7 @@ export const TasksList: React.FC = () => {
               ref={provided.innerRef}
               className="flex-1 bg-green-100 py-4 px-1 sm:p-4 rounded-3xl min-h-[400px]"
             >
-              <h3 className="font-bold mb-4 pl-2">Tamamlanan Görevler</h3>
+              <h3 className="font-bold mb-4 pl-2">{statusMap["completed"]} Görevler</h3>
               {completedTasks.map((task, index) => renderTask(task, index))}
               {provided.placeholder}
             </div>

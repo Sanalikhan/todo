@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export function Header() {
   return (
-    <div className="relative flex items-center justify-center py-9">
+    <div className="relative flex items-center justify-center py-9 slide-up">
       {/* Logo pinned to the left side of the header */}
       <div className="absolute left-11">
         <Image 

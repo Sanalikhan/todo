@@ -1,4 +1,4 @@
-import Image from 'next/Image';
+import Image from 'next/image';
 import React,{ useState } from 'react';
 import { AddTaskForm } from './addtaskform';
 export const Banner: React.FC = () => {
@@ -6,7 +6,7 @@ export const Banner: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className='flex bg-white md:py-5 rounded-4xl'>
+    <div className='flex bg-white md:py-5 rounded-4xl slide-left'>
     <div className='flex flex-col'>
          <div className="flex justify-between items-center">
         <div className='pl-4 py-2 pb-5 sm:pb-10'>
@@ -23,19 +23,17 @@ export const Banner: React.FC = () => {
     <div className='pl-7'>
     <button className="relative
     bg-purple-700 text-white montserrat-regular2 
-    px-2 py-1 sm:py-2 rounded-full shadow-md
-    transition-all duration-300
-    hover:bg-purple-500 hover:text-black
+    px-2 py-1 sm:py-2 transition delay-100 duration-300 ease-in-out hover:translate-y-1 hover:font-bold hover:cursor-pointer hover:shadow-md rounded-full shadow-md
+    hover:bg-purple-400 hover:text-black
     active:bg-purple-600 active:scale-95
     focus:outline-none focus:ring-2 focus:ring-purple-300 w-20 sm:w-32 mb-4 ml-5"
     onClick={() => setShowForm(true)}>Başla
-    <Image src='/todopop.jpg' width={50} height={50} className='absolute rounded-2xl bottom-[5%] left-[90%] w-9 sm:w-12 rotate-15'/>
+    <Image src='/todopop.jpg' width={50} height={50} alt='small decorative icon' className='absolute rounded-2xl bottom-[5%] left-[90%] w-9 sm:w-12 rotate-15'/>
     <Image src='/todo calander.jpg' width={40} height={40} alt='banner calender image' className='rounded-3xl absolute right-[90%] w-9 rotate-340 bottom-[5%] '/>
   </button>
   </div>
     </div>
     <AddTaskForm show={showForm} onClose={() => setShowForm(false)}/>
     </div>
-    
   );
 }

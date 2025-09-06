@@ -6,7 +6,7 @@ export type Task = {
   id: string;
   title: string;
   description: string;
-  status: "Açık" | "Tamamlandı"; // Turkish for pending/completed
+  status: "pending" | "completed"; // Turkish for pending/completed
 };
 
 // Zustand store type
