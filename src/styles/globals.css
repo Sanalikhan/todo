@@ -1,28 +1,8 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(215, 181, 258);
 }
 /* globals.css or any CSS file you use */
 .montserrat-regular {
@@ -41,7 +21,7 @@ body {
 .montserrat-bold {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -51,3 +31,32 @@ body {
   font-weight: 600;
   font-style: italic;
 }
+/*for slide up*/
+@keyframes slideInUp{
+  0%{
+    transform:translateY(10px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0%);
+    opacity: 1;
+  }}
+.slide-up{
+  animation: slideInUp 0.5s ease-in forwards;
+}
+/*for slide from left*/
+
+@keyframes slideInLeft{
+  0%{
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+.slide-left{
+animation: slideInLeft 1s ease-out forwards;
+}
+

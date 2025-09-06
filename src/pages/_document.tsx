@@ -8,7 +8,7 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
       </Head>
-      <body className="antialiased">
+      <body className="antialiased px-2 md:px-8">
         <Main />
         <NextScript />
       </body>

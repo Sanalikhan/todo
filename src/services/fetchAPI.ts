@@ -43,5 +43,5 @@ export const putAPI = async (
 export const deleteAPI = async (id: string) => {
   const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Görev silinemedi");
-  return res.json();
+  return;
 };
