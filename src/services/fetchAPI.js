@@ -1,4 +1,4 @@
-const BASE_URL = "/api/todo";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE + "/api/todo";
 
 // Get all tasks
 export const getAPI = async () => {
