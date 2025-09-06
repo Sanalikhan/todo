@@ -5,19 +5,15 @@ import { getAPI, putAPI, deleteAPI } from "../services/fetchAPI";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 
 // Map internal English status to Turkish display
-const statusMap: Record<"pending" | "completed", string> = {
+const statusMap = {
   pending: "Açık",
   completed: "Tamamlandı",
 };
 
-export const TasksList: React.FC = () => {
+export const TasksList= () => {
   const { tasks, setTasks, updateTask } = useTaskStore();
-  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
-  const [formData, setFormData] = useState<{ 
-    title: string; 
-    description: string; 
-    status: Task["status"]
-   }>({
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [formData, setFormData] = useState({
     title: "",
     description: "",
     status: "pending",
@@ -29,11 +25,11 @@ export const TasksList: React.FC = () => {
   }, [setTasks]);
 
   // Handle drag & drop
-  const onDragEnd = async (result: DropResult): Promise<void> => {
+  const onDragEnd = async (result) => {
     if (!result.destination) return;
 
     const task = tasks[result.source.index];
-    const newStatus: Task["status"] =
+    const newStatus =
       result.destination.droppableId === "pending" ? "pending" : "completed";
 
     // Update API
@@ -42,14 +38,14 @@ export const TasksList: React.FC = () => {
   };
 
   // Handle Delete
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id) => {
     await deleteAPI(id);
     const refreshed = await getAPI();
     setTasks(refreshed);
   };
 
   // Handle Edit
-  const handleEditClick = (task: Task): void => {
+  const handleEditClick = (task) => {
     setEditingTaskId(task.id);
     setFormData({
       title: task.title,
@@ -72,7 +68,7 @@ export const TasksList: React.FC = () => {
   const pendingTasks = tasks.filter((t) => t.status === "pending");
   const completedTasks = tasks.filter((t) => t.status === "completed");
 
-  const renderTask = (task: Task, index: number): React.ReactNode => (
+  const renderTask = (task, index) => (
     <Draggable key={task.id} draggableId={task.id} index={index}>
       {(provided) => (
         <div
@@ -96,7 +92,7 @@ export const TasksList: React.FC = () => {
               />
               <select
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value as Task["status"] })}
+                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                 className="border border-purple-700 p-2 rounded-3xl w-full pl-4"
               >
                 <option value="pending">Açık</option>

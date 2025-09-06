@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React,{ useState } from 'react';
 import { AddTaskForm } from './addtaskform';
-export const Banner: React.FC = () => {
+export const Banner = () => {
 
   const [showForm, setShowForm] = useState(false);
 

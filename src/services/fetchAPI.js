@@ -1,21 +1,21 @@
 const BASE_URL = "/api/todo";
-import { Task } from "@/store";
+
 // Get all tasks
-export const getAPI = async () : Promise<Task[]> => {
+export const getAPI = async () => {
   const res = await fetch(BASE_URL);
   if (!res.ok) throw new Error("Görevler alınamadı");
   return res.json();
 };
 
 // Get a single task by ID
-export const getByIdAPI = async (id: string):Promise<Task | null> => {
+export const getByIdAPI = async (id)=> {
   const res = await fetch(`${BASE_URL}/${id}`);
   if (!res.ok) throw new Error("Görev bulunamadı");
   return res.json();
 };
 
 // Create new task
-export const postAPI = async (data: { title: string; description: string }) : Promise<Task> => {
+export const postAPI = async (data) => {
   const res = await fetch(BASE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -26,10 +26,7 @@ export const postAPI = async (data: { title: string; description: string }) : Pr
 };
 
 // Update a task
-export const putAPI = async (
-  id: string,
-  data: { title?: string; description?: string; status?: string }
-) : Promise<Task> => {
+export const putAPI = async (id,data) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -40,7 +37,7 @@ export const putAPI = async (
 };
 
 // Delete a task
-export const deleteAPI = async (id: string) : Promise<void> => {
+export const deleteAPI = async (id) => {
   const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Görev silinemedi");
   return;

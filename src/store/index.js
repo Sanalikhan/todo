@@ -1,27 +1,10 @@
 // src/store/taskStore.ts
 import { create } from "zustand";
 
-// Task type
-export type Task = {
-  id: string;
-  title: string;
-  description: string;
-  status: "pending" | "completed"; // Turkish for pending/completed
-};
 
-// Zustand store type
-type TaskStore = {
-  tasks: Task[];
-  selectedTask: Task | null;
-  setTasks: (tasks: Task[]) => void;
-  addTask: (task: Task) => void;
-  removeTask: (id: string) => void;
-  updateTask: (task: Task) => void;
-  setSelectedTask: (task: Task | null) => void;
-};
 
 // Create the store
-export const useTaskStore = create<TaskStore>((set) => ({
+export const useTaskStore = create((set) => ({
   tasks: [],
   selectedTask: null,
 

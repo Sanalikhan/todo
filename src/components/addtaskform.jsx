@@ -3,17 +3,14 @@ import React, { useState } from "react";
 import { postAPI } from "../services/fetchAPI"; // your helper
 import { useTaskStore, Task } from "../store/index";
 
-interface AddTaskFormProps {
-  show: boolean;
-  onClose: () => void;
-}
 
-export const AddTaskForm: React.FC<AddTaskFormProps> = ({ show, onClose }) => {
+
+export const AddTaskForm = ({ show, onClose }) => {
   const addTask = useTaskStore((state) => state.addTask);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title) return alert("Başlık boş olamaz!");
     if (title.length > 50) return alert("Başlık en fazla 50 karakter olmalıdır!");
@@ -21,7 +18,7 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ show, onClose }) => {
 
     try {
       // API call
-      const newTask: Task = await postAPI({ title, description });
+      const newTask = await postAPI({ title, description });
       // Update store state
       addTask(newTask);
 
@@ -29,7 +26,7 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ show, onClose }) => {
       setTitle("");
       setDescription("");
       onClose()
-    } catch (err: unknown) {
+    } catch (err) {
     if (err instanceof Error) {
       console.error(err.message);
       alert("Görev eklenemedi: " + err.message);
