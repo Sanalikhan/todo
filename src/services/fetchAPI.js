@@ -1,7 +1,9 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE + "/api/todo";
 
+
 // Get all tasks
 export const getAPI = async () => {
+  console.log(BASE_URL);
   const res = await fetch(BASE_URL);
   if (!res.ok) throw new Error("Görevler alınamadı");
   return res.json();
