@@ -5,7 +5,7 @@ const nextConfig = {
         return [
           {
             source: '/api/:path*',
-            destination: 'https://todo-a61k.vercel.app/api/:path*',
+            destination: 'https://todo-a61k.vercel.app/api:path*',
           },
         ]
       },

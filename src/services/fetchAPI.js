@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE + "/api/todo";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE + "/api/todos";
   
 
 // Get all tasks
