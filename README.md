@@ -20,7 +20,6 @@ A sleek, full-stack application built with **Next.js**, **React**, **TypeScript*
 - **Frontend**:  
   - `React` – Component-based UI development  
   - `Next.js` – React framework for server-side rendering  
-  - `TypeScript` – Static typing for better code quality  
   - `Tailwind CSS` – Utility-first CSS framework for styling  
   - `react-beautiful-dnd` – Drag-and-drop library for React  
 
